@@ -8,6 +8,8 @@ import BD.Basededatos;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -94,6 +96,7 @@ public class NewServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String quehacer=request.getParameter("quehacer");
+        
     int qh=Integer.parseInt(quehacer);
     if(qh==2){
         try {
@@ -129,11 +132,54 @@ public class NewServlet extends HttpServlet {
         result="error1 Bd .."+ex.toString();
       }
     }
+    else if(qh==4){
+        //////
+
+        try {
+          Basededatos bd=new Basededatos(); 
+            result=bd.crearTabla();
+            processRequestbd(request, response);
+        } catch (SQLException ex) {
+            result="error leyendo "+ex.toString();
+            processRequestbd(request, response);
+        }
+    }
+    else if(qh==1){
+        String s1 = request.getParameter("cod");
+        int id = Integer.parseInt(s1);
+        String s2 = request.getParameter("nom");
+        //////
+
+        try {
+          Basededatos bd=new Basededatos(); 
+            result=bd.insertarDatos(id, s2);
+            processRequestbd(request, response);
+        } catch (SQLException ex) {
+            result="error leyendo "+ex.toString();
+            processRequestbd(request, response);
+        }
+        
+    }
+    else if(qh==5){
+        try {
+          Basededatos bd=new Basededatos(); 
+            result=bd.leerbasededatos();
+            processRequestbd(request, response);
+        } catch (SQLException ex) {
+            result="error leyendo "+ex.toString();
+            processRequestbd(request, response);
+        }   catch (ClassNotFoundException ex) {
+                result="error consultando "+ex.toString();
+            processRequestbd(request, response);
+            }
+        
+    }
     else {
         result="error...";
         processRequestbd(request, response);
 
     }
+    
     }
     /**
      * Returns a short description of the servlet.

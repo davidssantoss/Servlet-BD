@@ -2,6 +2,7 @@ package BD;
 
 
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 
@@ -49,27 +50,28 @@ public class Basededatos {
         " (id int, nombre varchar(15), PRIMARY KEY (id)  ); ";
             st.executeUpdate(  t   );
             conex.close();
+            
             todo=todo+ " creo tabla:";
         
         return todo;
     }
-    public String insertarDatos () throws SQLException{
+    public String insertarDatos (int i, String nombr) throws SQLException{
         conex = DriverManager
                       .getConnection
-              ("jdbc:mysql://localhost:3306/Ejemplo",
+              ("jdbc:mysql://localhost:3306/ejemplo",
               "root","mysql2018");
             st=conex.createStatement();
-            String g ;
+            
             String Query;
-            for (int i=0; i < 15; i++) {
-                g = "beta_"+i;
+            
+                
                 Query = "INSERT INTO " + 
                   "datos  " + 
-                  " VALUES("+ i+ ", " + "\"" + g + "\""  + ")";
+                  " VALUES("+ i + ", " + "\"" + nombr + "\""  + ")";
                 st = conex.createStatement();
                 st.executeUpdate(Query);
-                todo=todo+g+"<br>";
-            }
+                todo=todo+nombr+"<br>";
+            
         return todo;
             
     }
@@ -89,5 +91,25 @@ public class Basededatos {
               todo= todo + "Borro la base de datos";
         
               return todo;
+    }
+    public String leerbasededatos() throws SQLException, ClassNotFoundException {
+        ResultSet rs;
+        Class.forName("com.mysql.jdbc.Driver");
+        conex = DriverManager
+          .getConnection("jdbc:mysql://localhost:3306/ejemplo", 
+            "root", "mysql2018");
+        
+        st=conex.createStatement();
+        rs=st.executeQuery("select * from datos;");
+        
+        ///
+        String todo="";
+        while (rs.next()) {
+            int id= rs.getInt("id");
+            String n= rs.getString("nombre");
+            todo = todo + id+" "+n+"<br>";
+        }
+        conex.close();
+        return todo;
     }
 }

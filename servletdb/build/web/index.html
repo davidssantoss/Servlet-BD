@@ -38,7 +38,7 @@
                 "application/x-www-form-urlencoded");
     xhr.send("quehacer="+"2");
   }
-  function leerbd(){
+  function BorrarBD(){
     var resultados=document.getElementById("result");
     xhr = nuevoAjax();
     xhr.open("POST","NewServlet", true);  
@@ -51,16 +51,58 @@
                 "application/x-www-form-urlencoded");
     xhr.send("quehacer="+"3");
   }
+  function EnlistarTbl(){
+    var resultados=document.getElementById("result");
+    xhr = nuevoAjax();
+    xhr.open("POST","NewServlet", true);  
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState===4) {
+        resultados.innerHTML = xhr.responseText;
+      }
+    };
+    xhr.setRequestHeader("Content-Type", 
+                "application/x-www-form-urlencoded");
+    xhr.send("quehacer="+"5");
+  }
+  function crearTbl(){
+    var resultados=document.getElementById("result");
+    xhr = nuevoAjax();
+    xhr.open("POST","NewServlet", true);  
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState===4) {
+        resultados.innerHTML = xhr.responseText;
+      }
+    };
+    xhr.setRequestHeader("Content-Type", 
+                "application/x-www-form-urlencoded");
+    xhr.send("quehacer="+"4");
+  }
+  function insertarDatos(){
+      var dato=document.getElementById("a").value;
+    var dato1=document.getElementById("b").value;
+    var resultados=document.getElementById("result");
+    xhr = nuevoAjax();
+    xhr.open("POST","NewServlet", true);  
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState===4) {
+        resultados.innerHTML = xhr.responseText;
+      }
+    };
+    xhr.setRequestHeader("Content-Type", 
+                "application/x-www-form-urlencoded");
+     xhr.send("quehacer="+"1"+"&cod="+dato+"&nom="+dato1);
+  }
   </script>
     <body>
         <label> digite el codigo: <br> </label> <br>
-        <input type="text" id="a" ><br><br>
+        <input type="text" name ="cod" id="a" ><br><br>
         <label> digite el nombre: <br> </label> <br>
-        <br> <input type="text" id="b" ><br><br>
+        <br> <input type="text" name="nom" id="b" ><br><br>
         <input type="button" value="base de datos.(Una vez)" onClick="bd();"><br>
-        <input type="button" value="leer base de datos" onClick="leerbd();"><br>
-        <input type="button" value="Insertar" onClick=""><br>
-        <input type="button" value="Borrar" onClick=""><br>
+        <input type="button" value="Borrar la base de datos" onClick="BorrarBD();"><br>
+        <input type="button" value="Crear Tabla " onClick="crearTbl();"><br>
+        <input type="button" value="Insertar datos" onClick="insertarDatos();"><br>
+        <input type="button" value="Mostrar datos" onClick="EnlistarTbl();"><br>
         <br>
         <div style="width:600; height:300;border-color:red;
              color:blue;border-style:solid;"  id="result"></div>
