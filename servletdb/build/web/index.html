@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+  </head>
+    <script>
+        function nuevoAjax(){
+            var xmlhttp=false;
+            try {
+                xmlhttp = new ActiveXObject("Msxml2.XMLHTTP");
+            } 
+            catch (e) {
+                try {
+                        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+                } catch (E) {
+                        xmlhttp = false;
+                }
+            }
+
+        if (!xmlhttp && typeof XMLHttpRequest!=='undefined') {
+                xmlhttp = new XMLHttpRequest();
+        }
+        return xmlhttp;
+        }
+
+  function bd(){
+    var resultados=document.getElementById("result");
+    xhr = nuevoAjax();
+    xhr.open("POST","NewServlet", true);  
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState===4) {
+        resultados.innerHTML = xhr.responseText;
+      }
+    };
+    xhr.setRequestHeader("Content-Type", 
+                "application/x-www-form-urlencoded");
+    xhr.send("quehacer="+"2");
+  }
+  function leerbd(){
+    var resultados=document.getElementById("result");
+    xhr = nuevoAjax();
+    xhr.open("POST","NewServlet", true);  
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState===4) {
+        resultados.innerHTML = xhr.responseText;
+      }
+    };
+    xhr.setRequestHeader("Content-Type", 
+                "application/x-www-form-urlencoded");
+    xhr.send("quehacer="+"3");
+  }
+  </script>
+    <body>
+        <label> digite el codigo: <br> </label> <br>
+        <input type="text" id="a" ><br><br>
+        <label> digite el nombre: <br> </label> <br>
+        <br> <input type="text" id="b" ><br><br>
+        <input type="button" value="base de datos.(Una vez)" onClick="bd();"><br>
+        <input type="button" value="leer base de datos" onClick="leerbd();"><br>
+        <input type="button" value="Insertar" onClick=""><br>
+        <input type="button" value="Borrar" onClick=""><br>
+        <br>
+        <div style="width:600; height:300;border-color:red;
+             color:blue;border-style:solid;"  id="result"></div>
+    </body>
+</html>
